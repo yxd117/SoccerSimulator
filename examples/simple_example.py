@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 from soccersimulator.strategies  import Strategy
 from soccersimulator.mdpsoccer import SoccerTeam, Simulation, SoccerAction
 from soccersimulator.gui import SimuGUI,show_state,show_simu
 from soccersimulator.utils import Vector2D
 
+=======
+from soccersimulator  import Strategy, SoccerAction, Vector2D
+from soccersimulator import SoccerTeam, Simulation
+from soccersimulator import SimuGUI,show_state,show_simu
+>>>>>>> upstream/master
 
 
 ## Strategie aleatoire
