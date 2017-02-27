@@ -9,10 +9,12 @@ import time
 import traceback
 from . import settings
 from .guiutils import *
+import logging
+from .guisettings import *
 
 FPS = 50.
 FPS_MOD = 5.
-
+logger = logging.getLogger("soccersimulator.gui")
 
 class SimuGUI(pyglet.window.Window):
     AUTO = 0
@@ -131,15 +133,13 @@ class SimuGUI(pyglet.window.Window):
                 self.hud.draw()
         except Exception as e:
             time.sleep(0.0001)
-            print(e, traceback.print_exc())
+            logger.error("%s\n\t%s" %(e, traceback.format_exc()))
             raise e
 
     def _increase_fps(self):
         self._fps = min(self._fps + FPS_MOD, 200)
-        print(self._fps)
     def _decrease_fps(self):
         self._fps = max(self._fps - FPS_MOD, 1)
-        print(self._fps)
     def on_draw(self):
         self.draw()
 
@@ -173,7 +173,7 @@ class SimuGUI(pyglet.window.Window):
             gl.glLoadIdentity()
         except Exception as e:
             time.sleep(0.0001)
-            print(e, traceback.print_exc())
+            logger.error("%s\n\t%s"  %(e, traceback.format_exc()))
 
     def on_close(self):
         pyglet.window.Window.on_close(self)
@@ -224,9 +224,14 @@ class SimuGUI(pyglet.window.Window):
 
     def get_max_steps(self):
         try:
+            return self.max_steps
+        except Exception:
+            pass
+        try:
             return self.state.max_steps
         except Exception:
-            return settings.MAX_GAME_STEPS
+            pass
+        return settings.MAX_GAME_STEPS
 
     def update_round(self, team1, team2, state):
         self.change_state(state)
